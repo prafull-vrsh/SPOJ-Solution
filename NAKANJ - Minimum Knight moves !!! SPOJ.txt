@@ -1,0 +1,86 @@
+//Prafull Varshney
+#include<bits/stdc++.h>
+#define ll long long int
+#define pll pair<ll,ll>
+#define ln length
+#define vl vector<ll>
+#define vll vector<vector<ll>>
+#define vpll vector<pair<ll,ll>>
+#define pb push_back
+#define mp make_pair
+#define pq priority_queue
+#define it iterator
+#define ff first
+#define ss second
+#define bg begin
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define For(i,n) for(ll i=0;i<n;i++)
+#define Forr(i,n) for(ll i=n-1;i>=0;i--)
+#define st(v) sort(v.begin(),v.end())
+#define mod 1000000007
+#define inv(i,n,v) for(ll i=0;i<n;i++)cin>>v[i]
+using namespace std;
+bool check(ll a,ll b)
+{
+    if(a<0 || a>7)
+        return false;
+    if(b<0 || b>7)
+        return false;
+    return true;
+}
+void main2()
+{
+    ll ans=INT_MAX,sl,sr,el,er,f=0;
+    char ch;
+    cin>>ch;
+    sl=ch-'a';
+    cin>>ch;
+    sr=ch-'1';
+    cin>>ch;
+    el=ch-'a';
+    cin>>ch;
+    er=ch-'1';
+    vector<vector<bool>> visit(8,vector<bool>(8));
+    vl v(3),v1(3);
+    queue<vector<ll>> q;
+    v[0]=sl;
+    v[1]=sr;
+    v[2]=0;
+    q.push(v);
+    visit[sl][sr]=true;
+    int moves[8][2]={{2,1},{2,-1},{-2,-1},{-2,1},{1,2},{-1,2},{1,-2},{-1,-2}};
+    while(!q.empty())
+    {
+        v=q.front();
+        q.pop();
+        if(v[0]==el && v[1]==er)
+        {
+            if(ans>v[2])
+            ans=v[2];
+        }
+        for(ll i=0;i<8;i++)
+        {
+            if(check(v[0]+moves[i][0],v[1]+moves[i][1]) && visit[v[0]+moves[i][0]][v[1]+moves[i][1]]==false)
+            {
+                visit[v[0]+moves[i][0]][v[1]+moves[i][1]]=true;
+                v1[0]=v[0]+moves[i][0];
+                v1[1]=v[1]+moves[i][1];
+                v1[2]=v[2]+1;
+                q.push(v1);
+            }
+        }
+    }
+    cout<<ans<<"\n";
+   return;
+}
+int main()
+{
+    fast;
+    ll t=1;
+    cin>>t;
+    while(t--)
+    {
+        main2();
+    }
+    return 0;
+}
