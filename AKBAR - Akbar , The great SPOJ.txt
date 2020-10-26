@@ -1,0 +1,107 @@
+//Prafull Varshney
+#include<bits/stdc++.h>
+#define ll long long int
+#define pll pair<ll,ll>
+#define ln length
+#define vl vector<ll>
+#define vll vector<vector<ll>>
+#define vpll vector<pair<ll,ll>>
+#define pb push_back
+#define mp make_pair
+#define pq priority_queue
+#define it iterator
+#define ff first
+#define ss second
+#define bg begin
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define For(i,n) for(ll i=0;i<n;i++)
+#define Forr(i,n) for(ll i=n-1;i>=0;i--)
+#define st(v) sort(v.begin(),v.end())
+#define mod 1000000007
+#define inv(i,n,v) for(ll i=0;i<n;i++)cin>>v[i]
+using namespace std;
+void main2()
+{
+    ll n,r,m,a,b,f=0;
+    cin>>n>>r>>m;
+    vll adj(n);
+    for(ll i=0;i<r;i++)
+    {
+        cin>>a>>b;
+        a--;
+        b--;
+        adj[a].pb(b);
+        adj[b].pb(a);
+    }
+    if(m<=0)
+    {
+        cout<<"No\n";
+        return;
+    }
+    vll ks(m,vl(2));
+    for(ll i=0;i<m;i++)
+    {
+        cin>>ks[i][0]>>ks[i][1];
+        ks[i][0]--;
+    }
+    vl v(n,0);
+    f=0;
+    pll temp1;
+    for(ll i=0;i<m;i++)
+    {
+        queue<pll> q;
+        vector<bool> visit(n,false);
+        q.push({ks[i][0],0});
+        visit[ks[i][0]]=true;
+        while(!q.empty())
+        {
+            temp1=q.front();
+            q.pop();
+            if(temp1.ss<=ks[i][1])
+            {
+                if(v[temp1.ff]>0)
+                {
+                    f=1;
+                    break;
+                }
+                v[temp1.ff]++;
+                for(ll j=0;j<adj[temp1.ff].size();j++)
+                {
+                    if(visit[adj[temp1.ff][j]]==false)
+                    {
+                        q.push({adj[temp1.ff][j],temp1.ss+1});
+                        visit[adj[temp1.ff][j]]=true;
+                    }
+                }
+            }
+        }
+        if(f==1)
+            break;
+    }
+    if(f==1)
+        {
+            cout<<"No\n";
+            return;
+        }
+    for(ll i=0;i<n;i++)
+    {
+        if(v[i]==0)
+        {
+            cout<<"No\n";
+            return;
+        }
+    }
+    cout<<"Yes\n";
+   return;
+}
+int main()
+{
+    fast;
+    ll t=1;
+    cin>>t;
+    while(t--)
+    {
+        main2();
+    }
+    return 0;
+}
