@@ -1,0 +1,90 @@
+//Prafull Varshney
+#include<bits/stdc++.h>
+#define ll long long int
+#define pll pair<ll,ll>
+#define ln length
+#define vl vector<ll>
+#define vll vector<vector<ll>>
+#define vpll vector<pair<ll,ll>>
+#define pb push_back
+#define mp make_pair
+#define pq priority_queue
+#define it iterator
+#define ff first
+#define ss second
+#define bg begin
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define For(i,n) for(ll i=0;i<n;i++)
+#define Forr(i,n) for(ll i=n-1;i>=0;i--)
+#define st(v) sort(v.begin(),v.end())
+#define mod 1000000007
+#define inv(i,n,v) for(ll i=0;i<n;i++)cin>>v[i]
+using namespace std;
+void update(ll r,ll delta,vl &bit,ll n)
+{
+        for(ll i=r;i<n;)
+        {
+            bit[i]+=delta;
+            i=(i|(i+1));
+        }
+    return;
+}
+ll query(ll r,vl &bit,ll n)
+{
+    ll sum=0;
+    while(r>=0)
+    {
+        sum+=bit[r];
+        r=((r&(r+1))-1);
+    }
+    return sum;
+}
+void main2()
+{
+    ll n,q;
+    cin>>n>>q;
+    vl v(n),bit(n,0);
+    for(ll i=0;i<n;i++)
+        cin>>v[i];
+    for(ll i=0;i<n;i++)
+        update(i,v[i],bit,n);
+    ll x,y,d,z;
+    while(q--)
+    {
+        cin>>d;
+        if(d==1)
+        {
+            cin>>x;
+            cout<<v[x]<<"\n";
+            update(x,-v[x],bit,n);
+            v[x]=0;
+        }
+        else if(d==2)
+        {
+            cin>>x>>y;
+            update(x,y,bit,n);
+            v[x]+=y;
+        }
+        else
+        {
+            cin>>x>>y;
+            y=query(y,bit,n);
+            if(x-1>=0)
+                y=y-query(x-1,bit,n);
+            cout<<y<<"\n";
+        }
+    }
+    return;
+}
+int main()
+{
+   fast;
+   ll t=1;
+   cin>>t;
+   for(ll i=1;i<=t;i++)
+    {
+        cout<<"Case "<<i<<":\n";
+        main2();
+    }
+    return 0;
+}
